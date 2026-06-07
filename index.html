@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Çapoğlu Akademi — Geleceğe Güçlü Adımlar</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --lacivert:   #08122e;
+  --lacivert2:  #0d1d4a;
+  --lacivert3:  #152554;
+  --gold:       #c9922a;
+  --gold-ac:    #e8b84b;
+  --gold-parlak:#f5d878;
+  --krem:       #f5f0e8;
+  --krem2:      #ede5d0;
+  --beyaz:      #ffffff;
+  --gri:        #8a9ab8;
+  --gri2:       #c8d4e8;
+  --koyu:       #060c1e;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--koyu);
+  color: var(--krem);
+  overflow-x: hidden;
+}
+
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: var(--koyu); }
+::-webkit-scrollbar-thumb { background: var(--gold); border-radius: 3px; }
+
+/* ── NAV ── */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 18px 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(180deg, rgba(6,12,30,.98) 0%, rgba(6,12,30,0) 100%);
+  transition: background .3s;
+}
+nav.scrolled { background: rgba(6,12,30,.98); border-bottom: 1px solid rgba(201,146,42,.2); }
+.nav-logo img { height: 56px; filter: drop-shadow(0 2px 8px rgba(201,146,42,.3)); }
+.nav-links { display: flex; gap: 36px; list-style: none; }
+.nav-links a {
+  font-size: 14px; font-weight: 500; color: var(--gri2);
+  text-decoration: none; letter-spacing: .06em;
+  transition: color .2s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; right: 0;
+  height: 1px; background: var(--gold); transform: scaleX(0);
+  transition: transform .2s;
+}
+.nav-links a:hover { color: var(--gold-ac); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  background: var(--gold); color: var(--lacivert); font-weight: 600;
+  font-size: 14px; padding: 10px 24px; border-radius: 2px;
+  text-decoration: none; letter-spacing: .04em;
+  transition: background .2s, transform .2s;
+}
+.nav-cta:hover { background: var(--gold-ac); transform: translateY(-1px); }
+
+/* ── HERO ── */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+  padding: 120px 40px 80px;
+}
+
+.hero-bg {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 20%, rgba(21,37,84,.8) 0%, transparent 70%),
+    radial-gradient(ellipse 60% 40% at 80% 80%, rgba(201,146,42,.06) 0%, transparent 60%),
+    var(--koyu);
+}
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(201,146,42,.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(201,146,42,.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+.hero-glow {
+  position: absolute; top: -200px; left: 50%; transform: translateX(-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(201,146,42,.08) 0%, transparent 70%);
+  z-index: 0; pointer-events: none;
+}
+
+.hero-content { position: relative; z-index: 2; text-align: center; max-width: 900px; }
+
+.hero-logo {
+  height: 180px; margin-bottom: 40px;
+  filter: drop-shadow(0 8px 32px rgba(201,146,42,.35));
+  animation: floatUp .8s ease-out both;
+}
+
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(201,146,42,.12); border: 1px solid rgba(201,146,42,.3);
+  color: var(--gold-ac); font-size: 12px; font-weight: 600;
+  letter-spacing: .12em; text-transform: uppercase;
+  padding: 8px 20px; border-radius: 2px; margin-bottom: 32px;
+  animation: floatUp .8s .1s ease-out both;
+}
+.hero-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); }
+
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(52px, 8vw, 100px);
+  font-weight: 900; line-height: 1;
+  color: var(--beyaz); margin-bottom: 8px;
+  animation: floatUp .8s .2s ease-out both;
+}
+.hero-title span { color: var(--gold-ac); }
+
+.hero-subtitle {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(22px, 3vw, 38px);
+  font-weight: 400; font-style: italic;
+  color: var(--gri); margin-bottom: 40px;
+  animation: floatUp .8s .3s ease-out both;
+}
+
+.hero-desc {
+  font-size: 18px; font-weight: 300; color: var(--gri2);
+  line-height: 1.8; max-width: 600px; margin: 0 auto 48px;
+  animation: floatUp .8s .35s ease-out both;
+}
+
+.hero-btns {
+  display: flex; gap: 16px; justify-content: center; flex-wrap: wrap;
+  animation: floatUp .8s .4s ease-out both;
+}
+.btn-primary {
+  background: var(--gold); color: var(--lacivert); font-weight: 700;
+  font-size: 16px; padding: 16px 40px; border-radius: 2px;
+  text-decoration: none; letter-spacing: .04em;
+  transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-primary:hover { background: var(--gold-ac); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(201,146,42,.3); }
+.btn-secondary {
+  background: transparent; color: var(--krem); font-weight: 500;
+  font-size: 16px; padding: 16px 40px; border-radius: 2px;
+  text-decoration: none; letter-spacing: .04em;
+  border: 1px solid rgba(245,240,232,.25);
+  transition: all .2s; display: inline-flex; align-items: center; gap: 8px;
+}
+.btn-secondary:hover { border-color: var(--gold); color: var(--gold-ac); }
+
+.hero-stats {
+  position: relative; z-index: 2;
+  display: flex; gap: 0; margin-top: 80px;
+  border: 1px solid rgba(201,146,42,.15);
+  border-radius: 2px; overflow: hidden;
+  animation: floatUp .8s .5s ease-out both;
+}
+.stat-item {
+  flex: 1; padding: 28px 40px; text-align: center;
+  background: rgba(13,29,74,.5); backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(201,146,42,.1);
+  transition: background .2s;
+}
+.stat-item:last-child { border-right: none; }
+.stat-item:hover { background: rgba(21,37,84,.7); }
+.stat-no { font-family: 'Playfair Display', serif; font-size: 42px; font-weight: 700; color: var(--gold-ac); line-height: 1; }
+.stat-label { font-size: 13px; color: var(--gri); margin-top: 6px; letter-spacing: .04em; }
+
+.hero-scroll {
+  position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 8px;
+  color: var(--gri); font-size: 12px; letter-spacing: .1em; text-transform: uppercase;
+  animation: bounce 2s infinite;
+}
+.hero-scroll::after {
+  content: ''; width: 1px; height: 40px;
+  background: linear-gradient(180deg, var(--gold), transparent);
+}
+
+/* ── BÖLÜM ORTAK ── */
+section { padding: 100px 60px; }
+.section-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  color: var(--gold); font-size: 12px; font-weight: 600;
+  letter-spacing: .14em; text-transform: uppercase; margin-bottom: 20px;
+}
+.section-badge::before { content: ''; width: 24px; height: 1px; background: var(--gold); }
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(36px, 4vw, 56px); font-weight: 700;
+  line-height: 1.15; margin-bottom: 16px;
+}
+.section-title span { color: var(--gold-ac); }
+.section-desc { font-size: 17px; color: var(--gri); line-height: 1.8; max-width: 560px; }
+.gold-divider {
+  width: 60px; height: 2px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-parlak));
+  margin: 24px 0;
+}
+
+/* ── HAKKIMIZDA ── */
+#hakkimizda {
+  background: linear-gradient(180deg, var(--koyu) 0%, var(--lacivert) 50%, var(--koyu) 100%);
+  position: relative; overflow: hidden;
+}
+#hakkimizda::before {
+  content: ''; position: absolute; right: -200px; top: 50%; transform: translateY(-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(201,146,42,.05) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hakkimizda-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center;
+}
+.hakkimizda-visual {
+  position: relative; display: flex; align-items: center; justify-content: center;
+}
+.hakkimizda-circle {
+  width: 420px; height: 420px; border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, var(--lacivert3) 0%, var(--lacivert) 60%, var(--koyu) 100%);
+  border: 1px solid rgba(201,146,42,.2);
+  display: flex; align-items: center; justify-content: center;
+  position: relative; overflow: hidden;
+}
+.hakkimizda-circle::before {
+  content: ''; position: absolute; inset: 12px; border-radius: 50%;
+  border: 1px solid rgba(201,146,42,.1);
+}
+.hakkimizda-circle img { height: 220px; filter: drop-shadow(0 4px 20px rgba(201,146,42,.3)); }
+.hakkimizda-ring {
+  position: absolute; inset: -20px; border-radius: 50%;
+  border: 1px dashed rgba(201,146,42,.2);
+  animation: rotate 30s linear infinite;
+}
+@keyframes rotate { to { transform: rotate(360deg); } }
+.hakkimizda-ring::before {
+  content: ''; position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+  width: 10px; height: 10px; border-radius: 50%; background: var(--gold);
+}
+
+.hakkimizda-text .section-badge { display: flex; }
+.hakkimizda-quote {
+  font-family: 'Playfair Display', serif;
+  font-size: 19px; font-style: italic; color: var(--gri2);
+  line-height: 1.7; margin: 24px 0 32px;
+  padding-left: 24px; border-left: 2px solid var(--gold);
+}
+.ozellik-list { display: flex; flex-direction: column; gap: 16px; margin-top: 32px; }
+.ozellik {
+  display: flex; align-items: center; gap: 16px;
+  padding: 16px 20px;
+  background: rgba(13,29,74,.4); border: 1px solid rgba(201,146,42,.1);
+  border-radius: 2px; transition: all .2s;
+}
+.ozellik:hover { background: rgba(21,37,84,.6); border-color: rgba(201,146,42,.3); transform: translateX(4px); }
+.ozellik-no { font-family: 'Playfair Display', serif; font-size: 28px; font-weight: 700; color: var(--gold); min-width: 40px; }
+.ozellik-text { font-size: 15px; color: var(--krem); font-weight: 500; }
+
+/* ── NEDEN ── */
+#neden {
+  background: var(--koyu);
+  position: relative; overflow: hidden;
+}
+.neden-inner { max-width: 1200px; margin: 0 auto; }
+.neden-header { text-align: center; margin-bottom: 64px; }
+.neden-header .gold-divider { margin: 24px auto; }
+.neden-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.neden-kart {
+  padding: 40px 32px;
+  background: rgba(13,29,74,.35); border: 1px solid rgba(201,146,42,.1);
+  border-radius: 2px; transition: all .3s; position: relative; overflow: hidden;
+}
+.neden-kart::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  transform: scaleX(0); transition: transform .3s;
+}
+.neden-kart:hover { background: rgba(21,37,84,.6); transform: translateY(-4px); border-color: rgba(201,146,42,.3); }
+.neden-kart:hover::before { transform: scaleX(1); }
+.neden-icon {
+  width: 56px; height: 56px; border-radius: 2px;
+  background: rgba(201,146,42,.1); border: 1px solid rgba(201,146,42,.2);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 24px; margin-bottom: 24px;
+}
+.neden-kart h3 { font-family: 'Playfair Display', serif; font-size: 22px; font-weight: 700; color: var(--beyaz); margin-bottom: 12px; }
+.neden-kart p { font-size: 15px; color: var(--gri); line-height: 1.7; }
+
+/* ── SINIFLAR ── */
+#siniflar {
+  background: linear-gradient(180deg, var(--koyu) 0%, var(--lacivert) 100%);
+}
+.siniflar-inner { max-width: 1200px; margin: 0 auto; }
+.siniflar-header { margin-bottom: 60px; }
+.sinif-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 20px; }
+.sinif-kart {
+  background: rgba(6,12,30,.8); border: 1px solid rgba(201,146,42,.15);
+  border-radius: 2px; overflow: hidden; transition: all .3s; cursor: default;
+}
+.sinif-kart:hover { transform: translateY(-6px); border-color: var(--gold); box-shadow: 0 20px 40px rgba(201,146,42,.1); }
+.sinif-kart-ust {
+  background: linear-gradient(135deg, var(--lacivert2) 0%, var(--lacivert3) 100%);
+  padding: 32px 24px 24px; border-bottom: 2px solid var(--gold);
+  position: relative; overflow: hidden;
+}
+.sinif-kart-ust::after {
+  content: attr(data-no);
+  position: absolute; right: -10px; top: -20px;
+  font-family: 'Playfair Display', serif; font-size: 100px; font-weight: 900;
+  color: rgba(201,146,42,.06); line-height: 1;
+}
+.sinif-no { font-family: 'Playfair Display', serif; font-size: 48px; font-weight: 900; color: var(--gold-ac); line-height: 1; }
+.sinif-label { font-size: 13px; color: var(--gri); margin-top: 4px; letter-spacing: .06em; }
+.sinif-kart-alt { padding: 24px; }
+.sinif-kart-alt p { font-size: 15px; color: var(--gri2); line-height: 1.7; }
+.sinif-tag {
+  display: inline-block; margin-top: 16px;
+  background: rgba(201,146,42,.1); color: var(--gold-ac);
+  font-size: 12px; font-weight: 600; padding: 4px 12px;
+  border: 1px solid rgba(201,146,42,.2); letter-spacing: .06em;
+}
+
+/* ── PROGRAM ── */
+#program {
+  background: var(--koyu); position: relative;
+}
+.program-inner { max-width: 1200px; margin: 0 auto; }
+.program-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: start; }
+.program-info { }
+.program-detaylar { display: flex; flex-direction: column; gap: 16px; margin-top: 40px; }
+.program-item {
+  display: flex; align-items: center; gap: 20px;
+  padding: 20px 24px; background: rgba(13,29,74,.4);
+  border: 1px solid rgba(201,146,42,.1); border-radius: 2px;
+  transition: all .2s;
+}
+.program-item:hover { border-color: rgba(201,146,42,.3); background: rgba(21,37,84,.5); }
+.program-item-icon {
+  width: 48px; height: 48px; border-radius: 2px;
+  background: rgba(201,146,42,.1); display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.program-item h4 { font-size: 16px; font-weight: 600; color: var(--beyaz); margin-bottom: 4px; }
+.program-item p { font-size: 14px; color: var(--gri); }
+
+.program-fiyat {
+  background: linear-gradient(135deg, rgba(13,29,74,.8) 0%, rgba(21,37,84,.6) 100%);
+  border: 1px solid rgba(201,146,42,.2); border-radius: 2px;
+  padding: 48px 40px; position: sticky; top: 100px;
+}
+.fiyat-badge {
+  display: inline-block; background: var(--gold); color: var(--lacivert);
+  font-size: 11px; font-weight: 700; letter-spacing: .1em;
+  padding: 6px 16px; margin-bottom: 24px;
+}
+.fiyat-no {
+  font-family: 'Playfair Display', serif;
+  font-size: 62px; font-weight: 900; color: var(--beyaz); line-height: 1;
+}
+.fiyat-no span { font-size: 28px; color: var(--gri); vertical-align: top; margin-top: 14px; display: inline-block; }
+.fiyat-donem { font-size: 15px; color: var(--gri); margin-top: 6px; margin-bottom: 32px; }
+.fiyat-liste { display: flex; flex-direction: column; gap: 12px; margin-bottom: 36px; }
+.fiyat-item {
+  display: flex; align-items: center; gap: 12px;
+  font-size: 15px; color: var(--gri2);
+}
+.fiyat-item::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+.fiyat-cta {
+  display: block; text-align: center;
+  background: var(--gold); color: var(--lacivert); font-weight: 700;
+  font-size: 16px; padding: 18px; text-decoration: none;
+  transition: all .2s; letter-spacing: .04em;
+}
+.fiyat-cta:hover { background: var(--gold-ac); }
+.fiyat-not { font-size: 13px; color: var(--gri); text-align: center; margin-top: 16px; }
+
+/* ── İLETİŞİM ── */
+#iletisim {
+  background: linear-gradient(180deg, var(--lacivert) 0%, var(--koyu) 100%);
+  position: relative; overflow: hidden;
+}
+#iletisim::before {
+  content: ''; position: absolute; left: 50%; top: 50%; transform: translate(-50%,-50%);
+  width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(201,146,42,.04) 0%, transparent 70%);
+}
+.iletisim-inner { max-width: 1000px; margin: 0 auto; position: relative; z-index: 2; }
+.iletisim-header { text-align: center; margin-bottom: 60px; }
+.iletisim-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
+.iletisim-bilgi { display: flex; flex-direction: column; gap: 20px; }
+.iletisim-kart {
+  display: flex; align-items: center; gap: 20px;
+  padding: 24px; background: rgba(13,29,74,.4);
+  border: 1px solid rgba(201,146,42,.1); border-radius: 2px;
+  transition: all .2s;
+}
+.iletisim-kart:hover { border-color: rgba(201,146,42,.3); }
+.iletisim-ikon {
+  width: 48px; height: 48px; border-radius: 2px;
+  background: rgba(201,146,42,.1); display: flex; align-items: center; justify-content: center;
+  font-size: 22px; flex-shrink: 0;
+}
+.iletisim-kart h4 { font-size: 13px; color: var(--gri); font-weight: 500; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+.iletisim-kart p { font-size: 16px; color: var(--beyaz); font-weight: 500; }
+
+.iletisim-form { display: flex; flex-direction: column; gap: 16px; }
+.form-group { display: flex; flex-direction: column; gap: 8px; }
+.form-group label { font-size: 13px; color: var(--gri); font-weight: 500; letter-spacing: .04em; }
+.form-group input,
+.form-group select,
+.form-group textarea {
+  background: rgba(13,29,74,.4); border: 1px solid rgba(201,146,42,.15);
+  color: var(--beyaz); font-family: 'DM Sans', sans-serif; font-size: 15px;
+  padding: 14px 18px; border-radius: 2px; outline: none;
+  transition: border-color .2s;
+}
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus { border-color: var(--gold); }
+.form-group select option { background: var(--lacivert); }
+.form-group textarea { resize: vertical; min-height: 100px; }
+.form-submit {
+  background: var(--gold); color: var(--lacivert); font-weight: 700;
+  font-size: 16px; padding: 16px; border: none; border-radius: 2px;
+  cursor: pointer; letter-spacing: .04em; transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.form-submit:hover { background: var(--gold-ac); transform: translateY(-1px); }
+
+.whatsapp-btn {
+  position: fixed; bottom: 32px; right: 32px; z-index: 99;
+  width: 60px; height: 60px; border-radius: 50%;
+  background: #25d366; color: #fff; font-size: 28px;
+  display: flex; align-items: center; justify-content: center;
+  text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,.4);
+  transition: all .2s; animation: pulse 2s infinite;
+}
+.whatsapp-btn:hover { transform: scale(1.1); }
+@keyframes pulse {
+  0%,100% { box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+  50% { box-shadow: 0 4px 40px rgba(37,211,102,.6); }
+}
+
+/* ── FOOTER ── */
+footer {
+  background: var(--koyu); border-top: 1px solid rgba(201,146,42,.15);
+  padding: 48px 60px;
+}
+.footer-inner {
+  max-width: 1200px; margin: 0 auto;
+  display: flex; align-items: center; justify-content: space-between;
+}
+.footer-logo img { height: 48px; filter: drop-shadow(0 2px 8px rgba(201,146,42,.2)); }
+.footer-text { font-size: 14px; color: var(--gri); }
+.footer-text span { color: var(--gold); }
+.footer-links { display: flex; gap: 24px; }
+.footer-links a { font-size: 13px; color: var(--gri); text-decoration: none; transition: color .2s; }
+.footer-links a:hover { color: var(--gold-ac); }
+
+/* ── ANİMASYONLAR ── */
+@keyframes floatUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes bounce {
+  0%,100% { transform: translateX(-50%) translateY(0); }
+  50% { transform: translateX(-50%) translateY(8px); }
+}
+
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity .7s ease, transform .7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* ── MOBİL ── */
+@media (max-width: 900px) {
+  nav { padding: 16px 24px; }
+  .nav-links { display: none; }
+  section { padding: 72px 24px; }
+  .hakkimizda-inner,
+  .program-grid,
+  .iletisim-grid { grid-template-columns: 1fr; }
+  .neden-grid { grid-template-columns: 1fr; }
+  .sinif-grid { grid-template-columns: 1fr 1fr; }
+  .hero-stats { flex-direction: column; }
+  .hakkimizda-visual { display: none; }
+  .program-fiyat { position: static; }
+  footer { padding: 36px 24px; }
+  .footer-inner { flex-direction: column; gap: 20px; text-align: center; }
+}
+@media (max-width: 540px) {
+  .sinif-grid { grid-template-columns: 1fr; }
+  .hero-logo { height: 130px; }
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo"><a href="#hero"><img src="logo.png" alt="Çapoğlu Akademi"></a></div>
+  <ul class="nav-links">
+    <li><a href="#hakkimizda">Hakkımızda</a></li>
+    <li><a href="#neden">Neden Biz?</a></li>
+    <li><a href="#siniflar">Sınıflar</a></li>
+    <li><a href="#program">Program</a></li>
+    <li><a href="#iletisim">İletişim</a></li>
+  </ul>
+  <a href="#iletisim" class="nav-cta">Kayıt Ol</a>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-glow"></div>
+
+  <div class="hero-content">
+    <img src="logo.png" alt="Çapoğlu Akademi" class="hero-logo">
+    <div class="hero-badge">Arifiye, Sakarya · 2025–2026 Kayıtları Açık</div>
+    <h1 class="hero-title">Başarı <span>Sevgiyle</span> Başlar.</h1>
+    <p class="hero-subtitle">Geleceğe güçlü adımlar.</p>
+    <p class="hero-desc">5. sınıftan 8. sınıfa kadar matematik eğitiminde farklı bir yaklaşım. Önce öğretmeni, sonra dersi, sonra başarıyı seviyorsunuz.</p>
+    <div class="hero-btns">
+      <a href="#iletisim" class="btn-primary">Kayıt Yaptır →</a>
+      <a href="#neden" class="btn-secondary">Daha Fazla Bilgi</a>
+    </div>
+  </div>
+
+  <div class="hero-stats reveal">
+    <div class="stat-item">
+      <div class="stat-no">Max 5</div>
+      <div class="stat-label">Kişilik Gruplar</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-no">4</div>
+      <div class="stat-label">Farklı Sınıf Seviyesi</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-no">Haftada 2</div>
+      <div class="stat-label">Ders Günü</div>
+    </div>
+    <div class="stat-item">
+      <div class="stat-no">%100</div>
+      <div class="stat-label">Odak & İlgi</div>
+    </div>
+  </div>
+
+  <div class="hero-scroll">Keşfet</div>
+</section>
+
+<!-- HAKKIMIZDA -->
+<section id="hakkimizda">
+  <div class="hakkimizda-inner">
+    <div class="hakkimizda-visual reveal">
+      <div class="hakkimizda-circle">
+        <img src="logo.png" alt="Çapoğlu Akademi Logo">
+        <div class="hakkimizda-ring"></div>
+      </div>
+    </div>
+    <div class="hakkimizda-text reveal">
+      <p class="section-badge">Hakkımızda</p>
+      <h2 class="section-title">Matematiği <span>Sevdiren</span> Hoca</h2>
+      <div class="gold-divider"></div>
+      <blockquote class="hakkimizda-quote">
+        "Öğretmeni sevmeyen öğrenci dersi de sevemez. Biz önce güven inşa ederiz, başarı zaten gelir."
+      </blockquote>
+      <p class="section-desc">Matematik bölümü mezunu Umut Çapoğlu tarafından kurulan Çapoğlu Akademi, Arifiye'de 5–8. sınıf öğrencilerine özel matematik eğitimi sunmaktadır. Amacımız formül ezberletmek değil, matematiğin mantığını sevdirmektir.</p>
+      <div class="ozellik-list">
+        <div class="ozellik">
+          <span class="ozellik-no">01</span>
+          <span class="ozellik-text">Önce öğretmeni seversin</span>
+        </div>
+        <div class="ozellik">
+          <span class="ozellik-no">02</span>
+          <span class="ozellik-text">Sonra dersi seversin</span>
+        </div>
+        <div class="ozellik">
+          <span class="ozellik-no">03</span>
+          <span class="ozellik-text">Sonra başarırsın</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- NEDEN BİZ -->
+<section id="neden">
+  <div class="neden-inner">
+    <div class="neden-header reveal">
+      <p class="section-badge">Neden Çapoğlu Akademi?</p>
+      <h2 class="section-title">Farkımız <span>Yöntemimiz</span></h2>
+      <div class="gold-divider"></div>
+    </div>
+    <div class="neden-grid">
+      <div class="neden-kart reveal">
+        <div class="neden-icon">👥</div>
+        <h3>Max 5 Kişilik Gruplar</h3>
+        <p>Her öğrenci ayrı ayrı görülür, duyulur ve anlaşılır. Kaybolup gitmez. Kalabalık sınıfların yarattığı sessiz kayıplar burada olmaz.</p>
+      </div>
+      <div class="neden-kart reveal">
+        <div class="neden-icon">🧠</div>
+        <h3>Formülü Değil Mantığı</h3>
+        <p>Ezberletmiyoruz, anlıyoruz. Mantığını kavrayan öğrenci formülü zaten bulur, unutmaz ve sınavda şaşırmaz.</p>
+      </div>
+      <div class="neden-kart reveal">
+        <div class="neden-icon">🎯</div>
+        <h3>LGS Odaklı İçerik</h3>
+        <p>8. sınıf öğrencileri için güncel müfredat ve LGS soru tipleri üzerine özel hazırlık programı uygulanmaktadır.</p>
+      </div>
+      <div class="neden-kart reveal">
+        <div class="neden-icon">📍</div>
+        <h3>Arifiye'nin Kalbinde</h3>
+        <p>Merkezi konumuyla ulaşımı kolay, sıcak ve motive edici bir öğrenme ortamı. Ailenize ve çocuğunuza yakın.</p>
+      </div>
+      <div class="neden-kart reveal">
+        <div class="neden-icon">📊</div>
+        <h3>Düzenli Veli Bildirimi</h3>
+        <p>Çocuğunuzun gelişimini takip ediyoruz ve düzenli aralıklarla bilgilendirme yapıyoruz. Sürprizlerle değil, planlı ilerleriz.</p>
+      </div>
+      <div class="neden-kart reveal">
+        <div class="neden-icon">✨</div>
+        <h3>Sevgi Temelli Eğitim</h3>
+        <p>Baskı değil sevgi. Korku değil merak. Matematiğin güzelliğini keşfeden her öğrenci kendi potansiyelini bulur.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SINIFLAR -->
+<section id="siniflar">
+  <div class="siniflar-inner">
+    <div class="siniflar-header reveal">
+      <p class="section-badge">Eğitim Seviyeleri</p>
+      <h2 class="section-title">Hangi <span>Sınıf</span>?</h2>
+      <div class="gold-divider"></div>
+      <p class="section-desc">5. sınıftan 8. sınıfa kadar her seviye için ayrı grup ve ayrı program. Nerede olursan ol, seni aldığımız yerden devam ederiz.</p>
+    </div>
+    <div class="sinif-grid">
+      <div class="sinif-kart reveal">
+        <div class="sinif-kart-ust" data-no="5">
+          <div class="sinif-no">5.</div>
+          <div class="sinif-label">SINIF</div>
+        </div>
+        <div class="sinif-kart-alt">
+          <p>Matematiğe doğru ve sevgi dolu bir başlangıç. Temel kavramlar, güçlü alışkanlıklar ve merak uyandıran anlatım.</p>
+          <span class="sinif-tag">Temel Matematik</span>
+        </div>
+      </div>
+      <div class="sinif-kart reveal">
+        <div class="sinif-kart-ust" data-no="6">
+          <div class="sinif-no">6.</div>
+          <div class="sinif-label">SINIF</div>
+        </div>
+        <div class="sinif-kart-alt">
+          <p>Güçlü temeller ve genişleyen bakış açısı. Her konu önceki yılın üzerine inşa edilir, boşluk kalmaz.</p>
+          <span class="sinif-tag">Güçlü Temeller</span>
+        </div>
+      </div>
+      <div class="sinif-kart reveal">
+        <div class="sinif-kart-ust" data-no="7">
+          <div class="sinif-no">7.</div>
+          <div class="sinif-label">SINIF</div>
+        </div>
+        <div class="sinif-kart-alt">
+          <p>LGS hazırlık sürecinin ilk adımı. Sınav stratejisi, hız ve doğruluk çalışmaları bu yıl başlar.</p>
+          <span class="sinif-tag">LGS Hazırlık</span>
+        </div>
+      </div>
+      <div class="sinif-kart reveal">
+        <div class="sinif-kart-ust" data-no="8">
+          <div class="sinif-no">8.</div>
+          <div class="sinif-label">SINIF</div>
+        </div>
+        <div class="sinif-kart-alt">
+          <p>LGS'de fark yaratmak için yoğun ve odaklı program. Güncel müfredat, deneme sınavları ve kişisel analiz.</p>
+          <span class="sinif-tag">LGS Yoğun</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROGRAM & ÜCRET -->
+<section id="program">
+  <div class="program-inner">
+    <div class="program-grid">
+      <div class="program-info reveal">
+        <p class="section-badge">Program Detayları</p>
+        <h2 class="section-title">Nasıl <span>Çalışır</span>?</h2>
+        <div class="gold-divider"></div>
+        <p class="section-desc">Şeffaf, planlı ve sonuç odaklı bir sistem. Öğrenciniz her adımda takip edilir.</p>
+        <div class="program-detaylar">
+          <div class="program-item">
+            <div class="program-item-icon">📅</div>
+            <div>
+              <h4>Haftada 2 Gün</h4>
+              <p>Düzenli ve tutarlı ders programı. Aile ile koordineli planlama.</p>
+            </div>
+          </div>
+          <div class="program-item">
+            <div class="program-item-icon">⏱️</div>
+            <div>
+              <h4>90 Dakika / Ders</h4>
+              <p>Konu anlatımı + soru çözümü + geri bildirim. Verimli ve yoğun.</p>
+            </div>
+          </div>
+          <div class="program-item">
+            <div class="program-item-icon">👥</div>
+            <div>
+              <h4>Max 5 Kişilik Grup</h4>
+              <p>Her öğrenciye yeterli ilgi ve zaman. Kalabalık sınıf yok.</p>
+            </div>
+          </div>
+          <div class="program-item">
+            <div class="program-item-icon">📋</div>
+            <div>
+              <h4>Aylık Veli Raporu</h4>
+              <p>Gelişim takibi, konu değerlendirmesi ve öneri raporu.</p>
+            </div>
+          </div>
+          <div class="program-item">
+            <div class="program-item-icon">📚</div>
+            <div>
+              <h4>Ders Notu & Materyal</h4>
+              <p>Özel hazırlanmış soru bankası ve konu özetleri ücretsiz.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="program-fiyat reveal">
+        <div class="fiyat-badge">AYLIK PAKET</div>
+        <div class="fiyat-no"><span>₺</span>5.000</div>
+        <div class="fiyat-donem">/ aylık · Haftada 2 ders · 8 ders</div>
+        <div class="fiyat-liste">
+          <div class="fiyat-item">Max 5 kişilik grup dersi</div>
+          <div class="fiyat-item">90 dakika / ders</div>
+          <div class="fiyat-item">Özel ders notları & materyaller</div>
+          <div class="fiyat-item">Aylık veli bilgilendirmesi</div>
+          <div class="fiyat-item">Arifiye merkezi konum</div>
+        </div>
+        <a href="https://wa.me/90TELEFON" class="fiyat-cta">WhatsApp ile Kayıt Ol</a>
+        <p class="fiyat-not">Kontenjan dolmadan yerinizi ayırtın.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- İLETİŞİM -->
+<section id="iletisim">
+  <div class="iletisim-inner">
+    <div class="iletisim-header reveal">
+      <p class="section-badge">İletişim</p>
+      <h2 class="section-title">Hemen <span>Kayıt</span> Olun</h2>
+      <div class="gold-divider" style="margin: 24px auto;"></div>
+      <p class="section-desc" style="margin: 0 auto;">Formu doldurun, sizi arayalım. Veya doğrudan WhatsApp'tan ulaşın.</p>
+    </div>
+    <div class="iletisim-grid">
+      <div class="iletisim-bilgi reveal">
+        <div class="iletisim-kart">
+          <div class="iletisim-ikon">📍</div>
+          <div>
+            <h4>Adres</h4>
+            <p>Arifiye, Sakarya</p>
+          </div>
+        </div>
+        <div class="iletisim-kart">
+          <div class="iletisim-ikon">💬</div>
+          <div>
+            <h4>Instagram</h4>
+            <p>@capoglu.akademi</p>
+          </div>
+        </div>
+        <div class="iletisim-kart">
+          <div class="iletisim-ikon">📚</div>
+          <div>
+            <h4>Seviyeler</h4>
+            <p>5. 6. 7. 8. Sınıf Matematik</p>
+          </div>
+        </div>
+        <div class="iletisim-kart">
+          <div class="iletisim-ikon">⏰</div>
+          <div>
+            <h4>Çalışma Saatleri</h4>
+            <p>Hafta içi & Cumartesi</p>
+          </div>
+        </div>
+      </div>
+
+      <form class="iletisim-form reveal" onsubmit="formGonder(event)">
+        <div class="form-group">
+          <label>Veli Adı Soyadı</label>
+          <input type="text" placeholder="Ad Soyad" required>
+        </div>
+        <div class="form-group">
+          <label>Telefon</label>
+          <input type="tel" placeholder="0555 000 00 00" required>
+        </div>
+        <div class="form-group">
+          <label>Öğrenci Sınıfı</label>
+          <select required>
+            <option value="">Sınıf seçin</option>
+            <option>5. Sınıf</option>
+            <option>6. Sınıf</option>
+            <option>7. Sınıf</option>
+            <option>8. Sınıf</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Mesaj (isteğe bağlı)</label>
+          <textarea placeholder="Sormak istediğiniz bir şey var mı?"></textarea>
+        </div>
+        <button type="submit" class="form-submit">Kayıt Talebini Gönder →</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-logo"><img src="logo.png" alt="Çapoğlu Akademi"></div>
+    <p class="footer-text">© 2025 <span>Çapoğlu Akademi</span> · Tüm hakları saklıdır.</p>
+    <div class="footer-links">
+      <a href="#hero">Ana Sayfa</a>
+      <a href="#iletisim">İletişim</a>
+      <a href="https://instagram.com/capoglu.akademi">Instagram</a>
+    </div>
+  </div>
+</footer>
+
+<!-- WhatsApp Butonu -->
+<a href="https://wa.me/90TELEFON" class="whatsapp-btn" target="_blank" title="WhatsApp ile ulaşın">
+  <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+  </svg>
+</a>
+
+<script>
+// NAV scroll efekti
+window.addEventListener('scroll', () => {
+  document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+});
+
+// Reveal animasyonu
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach((e, i) => {
+    if (e.isIntersecting) {
+      setTimeout(() => e.target.classList.add('visible'), i * 80);
+    }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+// Form
+function formGonder(e) {
+  e.preventDefault();
+  const btn = e.target.querySelector('.form-submit');
+  btn.textContent = '✓ Talebiniz alındı! En kısa sürede arayacağız.';
+  btn.style.background = '#4a9b6f';
+  btn.disabled = true;
+}
+</script>
+</body>
+</html>
